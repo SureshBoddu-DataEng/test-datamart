@@ -28,6 +28,7 @@ ADDR:
 
 s3_conf:
   s3_bucket: sureshboddu
+  staging_dir: pg_staging
 
 redshift_conf:
   filetype: csv
