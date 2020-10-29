@@ -1,8 +1,7 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import current_date
 import yaml
 import os.path
-
-from sqlalchemy.sql.functions import current_date
 
 import com.pg.utils.utility as ut
 
@@ -86,4 +85,4 @@ if __name__ == '__main__':
                 .partitionedBy("ins_dt") \
                 .parquet("s3:a//" + app_conf["s3_conf"]["s3_bucket"]+"/"+src)
 
-
+#spark-submit --packages "mysql:mysql-connector-java:8.0.15" com/pg/source_data_loading.py
