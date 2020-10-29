@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
             txn_df.write \
                 .partitionBy("ins_dt") \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+app_conf["s3_conf"]["staging_dir"]+"/"+src)
+                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
 
         elif src == 'OL':
             # Read data from SFTP - receipt_delta, create dataframe out of it
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
             ol_txn_df.write \
                 .partitionBy("ins_dt") \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+app_conf["s3_conf"]["staging_dir"]+"/"+src)
+                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
 
         elif src == 'CP':
             # Read data from S3 - kc_extract_file, create dataframe out of it
@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
             finance_df.write \
                 .partitionBy("ins_dt") \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+app_conf["s3_conf"]["staging_dir"]+"/"+src)
+                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
 
         elif src == 'ADDR':
             # Read data from MongoDB - , create dataframe out of it
@@ -84,6 +84,6 @@ if __name__ == '__main__':
 
             addr_df.write \
                 .partitionBy("ins_dt") \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+app_conf["s3_conf"]["staging_dir"]+"/"+src)
+                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
 
 #spark-submit --packages "mysql:mysql-connector-java:8.0.15" com/pg/source_data_loading.py
