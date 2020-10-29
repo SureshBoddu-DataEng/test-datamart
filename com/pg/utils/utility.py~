@@ -33,10 +33,18 @@ def read_from_sftp(spark, app_conf, app_secret, pem_file_path):
     return df
 
 def read_from_s3(spark, app_conf):
+    fin_schema = StructType() \
+        .add("id", IntegerType(), True) \
+        .add("has_debt", BooleanType(), True) \
+        .add("has_financial_dependents", BooleanType(), True) \
+        .add("has_student_loans", BooleanType(), True) \
+        .add("income", DoubleType(), True)
+    
     df = spark.read \
         .option("header", "true") \
         .option("delimiter", "|") \
         .format("csv") \
+        .schema(fin_schema) \
         .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/KC_Extract_1_20171009.csv")
     return df
 
