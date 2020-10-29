@@ -35,10 +35,10 @@ def read_from_sftp(spark, app_conf, app_secret, pem_file_path):
 def read_from_s3(spark, app_conf):
     df = spark.read \
         .option("mode", "DROPMALFORMED") \
-        .option("header", "false") \
-        .option("delimiter", ",") \
+        .option("header", "true") \
+        .option("delimiter", "|") \
         .option("inferSchema", "true") \
-        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv") \
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/KC_Extract_1_20171009.csv") \
         .toDF("id", "has_debt", "has_financial_dependents", "has_student_loans", "income")
     return df
 
