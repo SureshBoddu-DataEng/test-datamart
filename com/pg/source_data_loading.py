@@ -39,7 +39,7 @@ if __name__ == '__main__':
             txn_df.show()
 
             txn_df.write \
-                .partitionedBy("ins_dt") \
+                .partitionBy("ins_dt") \
                 .parquet("s3:a//" + app_conf["s3_conf"]["s3_bucket"]+"/"+src)
 
         elif src == 'OL':
@@ -55,7 +55,7 @@ if __name__ == '__main__':
             ol_txn_df.show(5, False)
 
             ol_txn_df.write \
-                .partitionedBy("ins_dt") \
+                .partitionBy("ins_dt") \
                 .parquet("s3:a//" + app_conf["s3_conf"]["s3_bucket"]+"/"+src)
 
         elif src == 'CP':
@@ -69,7 +69,7 @@ if __name__ == '__main__':
             finance_df.show(5, False)
 
             finance_df.write \
-                .partitionedBy("ins_dt") \
+                .partitionBy("ins_dt") \
                 .parquet("s3:a//" + app_conf["s3_conf"]["s3_bucket"]+"/"+src)
 
         elif src == 'ADDR':
@@ -83,7 +83,7 @@ if __name__ == '__main__':
             addr_df.show(5, False)
 
             addr_df.write \
-                .partitionedBy("ins_dt") \
+                .partitionBy("ins_dt") \
                 .parquet("s3:a//" + app_conf["s3_conf"]["s3_bucket"]+"/"+src)
 
 #spark-submit --packages "mysql:mysql-connector-java:8.0.15" com/pg/source_data_loading.py
