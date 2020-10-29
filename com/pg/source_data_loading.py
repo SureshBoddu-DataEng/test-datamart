@@ -25,6 +25,7 @@ if __name__ == '__main__':
     src_list = app_conf["source_list"]
 
     for src in src_list:
+        print("src = ", src)
         src_conf = app_conf[src]
 
         if src == 'SB':
