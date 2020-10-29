@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Added content
+*.DS_Store
+.secrets
+*.pem
+*.ppk
