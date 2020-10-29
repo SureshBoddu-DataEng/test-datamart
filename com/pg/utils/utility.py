@@ -25,7 +25,7 @@ def read_from_sftp(spark, app_conf, app_secret, pem_file_path):
         .option("host", app_secret["sftp_conf"]["hostname"]) \
         .option("port", app_secret["sftp_conf"]["port"]) \
         .option("username", app_secret["sftp_conf"]["username"]) \
-        .option("pem", os.path.abspath(pem_file_path)) \
+        .option("pem", pem_file_path) \
         .option("fileType", "csv") \
         .option("delimiter", "|") \
         .load(app_conf["sftp_conf"]["directory"] + "/receipts_delta_GBR_14_10_2017.csv")
