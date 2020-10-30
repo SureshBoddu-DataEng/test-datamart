@@ -13,8 +13,6 @@ if __name__ == '__main__':
     spark = SparkSession \
         .builder \
         .appName("Read Files") \
-        .config("spark.mongodb.input.uri", app_secret["mongodb_config"]["uri"]) \
-        .config("spark.mongodb.output.uri", app_secret["mongodb_config"]["uri"]) \
         .getOrCreate()
 
     spark.sparkContext.setLogLevel('ERROR')
@@ -31,6 +29,9 @@ if __name__ == '__main__':
     hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
+
+    spark = spark.config("spark.mongodb.input.uri", app_secret["mongodb_config"]["uri"]) \
+                 .config("spark.mongodb.output.uri", app_secret["mongodb_config"]["uri"])
 
     addr_df = spark.read \
         .json("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/KC_Extract_2_20171009.json")
