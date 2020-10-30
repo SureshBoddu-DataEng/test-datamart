@@ -35,6 +35,8 @@ if __name__ == '__main__':
             # Add a column 'ins_dt' - current_date()
             # Write dataframe in S3 partitioned by 'ins_dt'
 
+            print("\nStart reading data from SB:Mysql and write it S3")
+
             txn_df = ut.read_from_mysql(spark, src_conf, app_secret) \
                 .withColumn("ins_dt", current_date())
 
@@ -43,11 +45,13 @@ if __name__ == '__main__':
             txn_df.write \
                 .partitionBy("ins_dt") \
                 .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
+            print("\nReading data from SB:Mysql and write it S3 is completed")
 
         elif src == 'OL':
             # Read data from SFTP - receipt_delta, create dataframe out of it
             # Add a column 'ins_dt' - current_date()
             # Write dataframe in S3 partitioned by 'ins_dt'
+            print("\nStart reading data from OL:SFTP and write it S3")
 
             pem_file_path = current_dir + "/../../" + app_secret["sftp_conf"]["pem"]
 
@@ -59,11 +63,12 @@ if __name__ == '__main__':
             ol_txn_df.write \
                 .partitionBy("ins_dt") \
                 .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
-
+            print("\nReading data from OL:SFTP and write it S3 is completed")
         elif src == 'CP':
             # Read data from S3 - kc_extract_file, create dataframe out of it
             # Add a column 'ins_dt' - current_date()
             # Write dataframe in S3 partitioned by 'ins_dt'
+            print("\nStart reading data from CP:Source S3 and write it destination S3")
 
             finance_df = ut.read_from_s3(spark, src_conf) \
                 .withColumn("ins_dt", current_date())
@@ -73,12 +78,12 @@ if __name__ == '__main__':
             finance_df.write \
                 .partitionBy("ins_dt") \
                 .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
-
+            print("\nReading data from CP:Source S3 and write it destination S3 is completed")
         elif src == 'ADDR':
             # Read data from MongoDB - , create dataframe out of it
             # Add a column 'ins_dt' - current_date()
             # Write dataframe in S3 partitioned by 'ins_dt'
-
+            print("\nStart reading data from ADDR:MongoDB and write it destination S3")
             addr_df = ut.read_from_mongodb(spark, src_conf, app_secret) \
                 .withColumn("ins_dt", current_date())
 
@@ -87,5 +92,5 @@ if __name__ == '__main__':
             addr_df.write \
                 .partitionBy("ins_dt") \
                 .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"]+"/"+app_conf["s3_conf"]["staging_dir"]+"/"+src)
-
+            print("\nReading data from ADDR:MongoDB and write it destination S3 is completed")
 #spark-submit --packages "mysql:mysql-connector-java:8.0.15,com.springml:spark-sftp_2.11:1.1.1,org.apache.hadoop:hadoop-aws:2.7.4,org.mongodb.spark:mongo-spark-connector_2.11:2.4.2" com/pg/source_data_loading.py
