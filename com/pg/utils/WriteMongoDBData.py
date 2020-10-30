@@ -50,4 +50,4 @@ if __name__ == '__main__':
 
     spark.stop()
 
-# spark-submit --packages "rg.mongodb.spark:mongo-spark-connector_2.11:2.4.2,org.apache.hadoop:hadoop-aws:2.7.4" com/pg/utils/WriteMongoDBData.py
+# spark-submit --packages "org.mongodb.spark:mongo-spark-connector_2.11:2.4.2,org.apache.hadoop:hadoop-aws:2.7.4" com/pg/utils/WriteMongoDBData.py
