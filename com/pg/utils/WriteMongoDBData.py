@@ -36,6 +36,7 @@ if __name__ == '__main__':
         .json("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/KC_Extract_2_20171009.json")
 
     addr_df.printSchema()
+    addr_df = addr_df.select(col("consumer_id"), col("address"), col("mobile-no"))
     addr_df.show(5, False)
 
     addr_df\
@@ -48,4 +49,4 @@ if __name__ == '__main__':
 
     spark.stop()
 
-# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" com/pg/utils/WriteMongoDBData.py
+# spark-submit --packages "rg.mongodb.spark:mongo-spark-connector_2.11:2.4.2,org.apache.hadoop:hadoop-aws:2.7.4" com/pg/utils/WriteMongoDBData.py
