@@ -36,8 +36,13 @@ if __name__ == '__main__':
     addr_df.printSchema()
     addr_df.show(5, False)
 
-    flattened_df = addr_df.select(col("consumer_id"), col("mobile-id"), col("address"))
-    flattened_df.show()
+    addr_df\
+        .write\
+        .format("com.mongodb.spark.sql.DefaultSource")\
+        .mode("append")\
+        .option("database", app_conf["mongodb_config"]["database"])\
+        .option("collection", app_conf["mongodb_config"]["collection"])\
+        .save()
 
     spark.stop()
 
