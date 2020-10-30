@@ -40,8 +40,8 @@ if __name__ == '__main__':
         .write\
         .format("com.mongodb.spark.sql.DefaultSource")\
         .mode("append")\
-        .option("database", app_conf["mongodb_config"]["database"])\
-        .option("collection", app_conf["mongodb_config"]["collection"])\
+        .option("database", app_conf["ADDR"]["mongodb_config"]["database"])\
+        .option("collection", app_conf["ADDR"]["mongodb_config"]["collection"])\
         .save()
 
     spark.stop()
