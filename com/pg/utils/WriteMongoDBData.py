@@ -37,7 +37,7 @@ if __name__ == '__main__':
         .json("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/KC_Extract_2_20171009.json")
 
     addr_df.printSchema()
-    addr_df = addr_df.select(col("consumer_id"), col("address").cast(StringType).alias("address"), col("mobile-no"))
+    addr_df = addr_df.select(col("consumer_id"), col(explode("address")).alias("address"), col("mobile-no"))
     addr_df.show(5, False)
 
     addr_df\
