@@ -36,4 +36,16 @@ REGIS_DIM:
   sourceData:
     - CP
     - ADDR
-  loadingQuery: SELECT
+  loadingQuery: >
+    SELECT
+      '' AS REGIS_KEY, REGIS_CNSM_ID AS CNSM_ID,CAST(REGIS_CTY_CODE AS SMALLINT) AS CTY_CODE,
+      CAST(REGIS_ID AS INTEGER) as REGIS_ID, REGIS_DATE, REGIS_LTY_ID AS LTY_ID, REGIS_CHANNEL, REGIS_GENDER, REGIS_CITY, INS_TS
+    FROM
+     (SELECT
+       DISTINCT a.REGIS_CNSM_ID, CAST(a.REGIS_CTY_CODE AS SMALLINT), CAST(a.REGIS_ID AS INTEGER),
+       a.REGIS_LTY_ID, a.REGIS_DATE, a.REGIS_CHANNEL, a.REGIS_GENDER, a.REGIS_CITY, a.INS_DT,
+       b.city, b.state, b.street, b.ins_dt
+      FROM
+        CustomerPortal a join Address b
+      ON a.REGIS_CNSM_ID = b.consumer_id
+     ) CP
