@@ -9,7 +9,8 @@ if __name__ == '__main__':
     spark = SparkSession \
         .builder \
         .appName("Read ingestion enterprise applications") \
-        .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
+        .config("spark.mongodb.input.uri", 'mongodb://ec2-52-17-243-155.eu-west-1.compute.amazonaws.com:27017') \
+        .config("spark.mongodb.output.uri", 'mongodb://ec2-52-17-243-155.eu-west-1.compute.amazonaws.com:27017') \
         .getOrCreate()
     spark.sparkContext.setLogLevel('ERROR')
 
@@ -22,25 +23,20 @@ if __name__ == '__main__':
     secret = open(app_secrets_path)
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
-    # Setup spark to use s3
-    hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
-    hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
-    hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
-
-    print("Process Started.................................")
-    src_list = app_conf["REGIS_DIM"]["sourceData"]
-    print(src_list)
-    for src in src_list:
-        print("src = "+src)
-        if src == 'CP':
-            print("Redading from S3   >>>>>>>")
-            txnDf = spark.read \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
-                .repartition(5)
-
-            txnDf.show(5, False)
+    src_list = app_conf["source_list"]
 
 
+    # for src in src_list:
+    #     print("src = "+src)
+    #     if src == 'CP':
+    #         print("Redading from S3   >>>>>>>")
+    #         txnDf = spark.read \
+    #             .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+    #             .repartition(5)
+    #
+    #         txnDf.show(5, False)
+    #
+    # 
 
     #
     # print("Writing txn_fact dataframe to AWS Redshift Table   >>>>>>>")
