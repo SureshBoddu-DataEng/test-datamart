@@ -49,7 +49,7 @@ if __name__ == '__main__':
     df = spark.sql("""SELECT
                '' AS REGIS_KEY, a.REGIS_CNSM_ID AS CNSM_ID,CAST(a.REGIS_CTY_CODE AS SMALLINT) AS CTY_CODE,
                CAST(a.REGIS_ID AS INTEGER) as REGIS_ID, a.REGIS_DATE, a.REGIS_LTY_ID AS LTY_ID, a.REGIS_CHANNEL
-               , a.REGIS_GENDER, a.REGIS_CITY, a.INS_TS,
+               , a.REGIS_GENDER, a.REGIS_CITY, a.ins_dt,
                b.city, b.mobile-no, b.state, b.street, b.ins_dt   
                FROM CustomerPortal a join Address b
                on (a.REGIS_CNSM_ID = b.consumer_id)
