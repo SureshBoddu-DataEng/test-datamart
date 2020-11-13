@@ -46,9 +46,7 @@ if __name__ == '__main__':
             addrDf.show(5, False)
             addrDf.createOrReplaceTempView("Address")
 
-    df = spark.sql(app_conf["REGIS_DIM"]["loadingQuery"])
-
-    df.show(5, False)
+    spark.sql(app_conf["REGIS_DIM"]["loadingQuery"]).show(5, False)
 
 
     #
