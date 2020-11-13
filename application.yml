@@ -32,7 +32,7 @@ s3_conf:
 
 
 REGIS_DIM:
-  tableName:"DATAMART.REGIS_DIM"
+  tableName: "DATAMART.REGIS_DIM"
   sourceData:
     - CP
     - ADDR

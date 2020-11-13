@@ -23,20 +23,20 @@ if __name__ == '__main__':
     secret = open(app_secrets_path)
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
-    src_list = app_conf["source_list"]
+    src_list = app_conf["REGIS_DIM"]["sourceData"]
 
 
-    # for src in src_list:
-    #     print("src = "+src)
-    #     if src == 'CP':
-    #         print("Redading from S3   >>>>>>>")
-    #         txnDf = spark.read \
-    #             .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
-    #             .repartition(5)
-    #
-    #         txnDf.show(5, False)
-    #
-    # 
+    for src in src_list:
+        print("src = "+src)
+        if src == 'CP':
+            print("Redading from S3   >>>>>>>")
+            txnDf = spark.read \
+                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+                .repartition(5)
+
+            txnDf.show(5, False)
+
+
 
     #
     # print("Writing txn_fact dataframe to AWS Redshift Table   >>>>>>>")
