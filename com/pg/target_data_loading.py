@@ -32,14 +32,14 @@ if __name__ == '__main__':
 
             for src in src_list:
                 print("src = "+src)
-                if src == 'CP':
-                    print("Redading from S3   >>>>>>>")
-                    cpDf = spark.read \
-                        .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
-                        .repartition(5)
+                print("Redading from S3   >>>>>>>")
+                cpDf = spark.read \
+                    .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+                    .repartition(5)
 
-                    cpDf.show(5, False)
-                    cpDf.createOrReplaceTempView(src)
+                cpDf.show(5, False)
+                cpDf.createOrReplaceTempView(src)
+
             print("REGIS_DIM")
             spark.sql(app_conf["REGIS_DIM"]["loadingQuery"]).show(5, False)
 
