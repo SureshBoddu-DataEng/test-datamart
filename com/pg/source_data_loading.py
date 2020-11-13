@@ -2,7 +2,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_date
 import yaml
 import os.path
-
 import com.pg.utils.utility as ut
 
 if __name__ == '__main__':
