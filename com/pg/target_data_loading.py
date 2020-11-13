@@ -31,18 +31,18 @@ if __name__ == '__main__':
     hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
-    print("Process Started.................................")
-    src_list = app_conf["REGIS_DIM"]["sourceData"]
-    print(src_list)
-    for src in src_list:
-        print("src = "+src)
-        if src == 'CP':
-            print("Redading from S3   >>>>>>>")
-            txnDf = spark.read \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
-                .repartition(5)
-
-            txnDf.show(5, False)
+    # print("Process Started.................................")
+    # src_list = app_conf["REGIS_DIM"]["sourceData"]
+    # print(src_list)
+    # for src in src_list:
+    #     print("src = "+src)
+    #     if src == 'CP':
+    #         print("Redading from S3   >>>>>>>")
+    #         txnDf = spark.read \
+    #             .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+    #             .repartition(5)
+    #
+    #         txnDf.show(5, False)
 
 
 
