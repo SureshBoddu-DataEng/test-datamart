@@ -36,6 +36,13 @@ if __name__ == '__main__':
 
             txnDf.show(5, False)
 
+        elif src == 'ADDR':
+            print("Redading from S3   >>>>>>>")
+            txnDf = spark.read \
+                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+                .repartition(5)
+
+            txnDf.show(5, False)
 
 
     #
