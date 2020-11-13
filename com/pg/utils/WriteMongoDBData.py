@@ -14,8 +14,8 @@ if __name__ == '__main__':
     spark = SparkSession \
         .builder \
         .appName("Read Files") \
-        .config("spark.mongodb.input.uri", 'mongodb://ec2-3-249-19-15.eu-west-1.compute.amazonaws.com:27017') \
-        .config("spark.mongodb.output.uri", 'mongodb://ec2-3-249-19-15.eu-west-1.compute.amazonaws.com:27017') \
+        .config("spark.mongodb.input.uri", 'mongodb://ec2-52-17-243-155.eu-west-1.compute.amazonaws.com:27017') \
+        .config("spark.mongodb.output.uri", 'mongodb://ec2-52-17-243-155.eu-west-1.compute.amazonaws.com:27017') \
         .getOrCreate()
 
     spark.sparkContext.setLogLevel('ERROR')
