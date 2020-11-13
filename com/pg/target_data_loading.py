@@ -46,20 +46,20 @@ if __name__ == '__main__':
 
 
 
-    """
-    print("Writing txn_fact dataframe to AWS Redshift Table   >>>>>>>")
-    jdbcUrl = ut.get_redshift_jdbc_url(app_secret)
-    print(jdbcUrl)
-
-    txnDf.coalesce(1).write\
-        .format("io.github.spark_redshift_community.spark.redshift") \
-        .option("url", jdbcUrl) \
-        .option("tempdir", "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/temp") \
-        .option("forward_spark_s3_credentials", "true") \
-        .option("dbtable", "PUBLIC.TXN_FCT") \
-        .mode("overwrite")\
-        .save()
-
-    print("Completed   <<<<<<<<<") """
+    #
+    # print("Writing txn_fact dataframe to AWS Redshift Table   >>>>>>>")
+    # jdbcUrl = ut.get_redshift_jdbc_url(app_secret)
+    # print(jdbcUrl)
+    #
+    # txnDf.coalesce(1).write\
+    #     .format("io.github.spark_redshift_community.spark.redshift") \
+    #     .option("url", jdbcUrl) \
+    #     .option("tempdir", "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/temp") \
+    #     .option("forward_spark_s3_credentials", "true") \
+    #     .option("dbtable", "PUBLIC.TXN_FCT") \
+    #     .mode("overwrite")\
+    #     .save()
+    #
+    # print("Completed   <<<<<<<<<")
 
 #spark-submit --packages "mysql:mysql-connector-java:8.0.15,com.springml:spark-sftp_2.11:1.1.1,org.apache.hadoop:hadoop-aws:2.7.4,org.mongodb.spark:mongo-spark-connector_2.11:2.4.2" com/pg/target_data_loading.py
