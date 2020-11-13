@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 import yaml
 import os.path
 import sys
-import utils.aws_utils as ut
+import com.pg.utils.utility as ut
 
 if __name__ == '__main__':
 
