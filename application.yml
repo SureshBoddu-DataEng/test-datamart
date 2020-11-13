@@ -30,9 +30,10 @@ s3_conf:
   s3_bucket: sureshboddu
   staging_dir: pg_staging
 
-redshift_conf:
-  filetype: csv
-  delimiter: |
-  dbtable: PUBLIC.TXN_FCT
-  query: SELECT txn_id, create_time, amount, cust_id from PUBLIC.TXN_FCT
 
+REGIS_DIM:
+  tableName:"DATAMART.REGIS_DIM"
+  sourceData:
+    - CP
+    - ADDR
+  loadingQuery: SELECT
