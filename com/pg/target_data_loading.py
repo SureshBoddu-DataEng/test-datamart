@@ -30,19 +30,31 @@ if __name__ == '__main__':
         print("src = "+src)
         if src == 'CP':
             print("Redading from S3   >>>>>>>")
-            txnDf = spark.read \
+            cpDf = spark.read \
                 .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
                 .repartition(5)
 
-            txnDf.show(5, False)
+            cpDf.show(5, False)
+            cpDf.createOrReplaceTempView("CustomerPortal")
 
         elif src == 'ADDR':
             print("Redading from S3   >>>>>>>")
-            txnDf = spark.read \
+            addrDf = spark.read \
                 .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
                 .repartition(5)
 
-            txnDf.show(5, False)
+            addrDf.show(5, False)
+            addrDf.createOrReplaceTempView("Address")
+
+    df = spark.sql("""SELECT
+               '' AS REGIS_KEY, a.REGIS_CNSM_ID AS CNSM_ID,CAST(a.REGIS_CTY_CODE AS SMALLINT) AS CTY_CODE,
+               CAST(a.REGIS_ID AS INTEGER) as REGIS_ID, a.REGIS_DATE, a.REGIS_LTY_ID AS LTY_ID, a.REGIS_CHANNEL, a.REGIS_GENDER, a.REGIS_CITY, a.INS_TS,
+               b.city, b.mobile-no, b.state, b.street, b.ins_dt   
+               FROM CustomerPortal a, Address b
+               WHERE a.REGIS_CNSM_ID = b.consumer_id
+               """)
+
+    df.show(5, False)
 
 
     #
