@@ -23,30 +23,25 @@ if __name__ == '__main__':
     secret = open(app_secrets_path)
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
-    src_list = app_conf["REGIS_DIM"]["sourceData"]
+    target_list = app_conf["target_list"]
 
+    for tgt in target_list:
+        tgt_conf = app_conf[tgt]
+        if tgt == 'REGIS_DIM':
+            src_list = tgt_conf["sourceData"]
 
-    for src in src_list:
-        print("src = "+src)
-        if src == 'CP':
-            print("Redading from S3   >>>>>>>")
-            cpDf = spark.read \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
-                .repartition(5)
+            for src in src_list:
+                print("src = "+src)
+                if src == 'CP':
+                    print("Redading from S3   >>>>>>>")
+                    cpDf = spark.read \
+                        .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+                        .repartition(5)
 
-            cpDf.show(5, False)
-            cpDf.createOrReplaceTempView("CustomerPortal")
-
-        elif src == 'ADDR':
-            print("Redading from S3   >>>>>>>")
-            addrDf = spark.read \
-                .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
-                .repartition(5)
-
-            addrDf.show(5, False)
-            addrDf.createOrReplaceTempView("Address")
-
-    spark.sql(app_conf["REGIS_DIM"]["loadingQuery"]).show(5, False)
+                    cpDf.show(5, False)
+                    cpDf.createOrReplaceTempView(src)
+            print("REGIS_DIM")
+            spark.sql(app_conf["REGIS_DIM"]["loadingQuery"]).show(5, False)
 
 
     #
