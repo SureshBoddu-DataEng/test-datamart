@@ -29,7 +29,7 @@ if __name__ == '__main__':
         return uid
 
     FN_UUID = spark.udf\
-                   .register("FN_UUID", FN_UUID, StringType)
+                   .register("FN_UUID", FN_UUID, StringType())
 
     target_list = app_conf["target_list"]
 
