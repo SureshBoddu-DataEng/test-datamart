@@ -64,16 +64,17 @@ if __name__ == '__main__':
             for src in src_list:
                 print("src = " + src)
                 print("Redading from S3   >>>>>>>")
-                childDimDf = spark.read \
-                    .parquet(
-                    "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+                df = spark.read \
+                    .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
                     .repartition(5)
 
-                childDimDf.show(5, False)
-                childDimDf.createOrReplaceTempView(src)
+                df.show(5, False)
+                df.createOrReplaceTempView(src)
 
             print("CHILD_DIM")
             spark.sql(tgt_conf["loadingQuery"]).show(5, False)
+
+            childDimDf = spark.sql(tgt_conf["loadingQuery"])
 
             ut.write_data_to_redshift(childDimDf.coalesce(1),
                                       app_secret,
