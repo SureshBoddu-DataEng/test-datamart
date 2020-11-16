@@ -113,6 +113,7 @@ if __name__ == '__main__':
             fctDf = spark.sql(tgt_conf["loadingQuery"])
 
             ut.write_data_to_redshift(fctDf.coalesce(1),
+                                      app_secret,
                                       "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/temp",
                                       tgt_conf["tableName"])
 
