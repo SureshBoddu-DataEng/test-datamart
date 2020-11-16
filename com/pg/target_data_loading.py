@@ -88,8 +88,7 @@ if __name__ == '__main__':
                 print("src = " + src)
                 print("Redading from S3   >>>>>>>")
                 dimDf = spark.read \
-                    .parquet(
-                    "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
+                    .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
                     .repartition(5)
 
                 dimDf.show(5, False)
@@ -111,7 +110,9 @@ if __name__ == '__main__':
             print("RTL_TXN_FCT")
             spark.sql(tgt_conf["loadingQuery"]).show(5, False)
 
-            ut.write_data_to_redshift(childDimDf.coalesce(1),
+            fctDf = spark.sql(tgt_conf["loadingQuery"])
+
+            ut.write_data_to_redshift(fctDf.coalesce(1),
                                       "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/temp",
                                       tgt_conf["tableName"])
 
