@@ -24,12 +24,12 @@ if __name__ == '__main__':
     secret = open(app_secrets_path)
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
-    def FN_UUID():
+    def fn_uuid():
         uid = uuid.uuid1()
         return uid
 
     FN_UUID = spark.udf\
-                   .register("FN_UUID", FN_UUID, StringType())
+                   .register("FN_UUID", fn_uuid, StringType())
 
     target_list = app_conf["target_list"]
 
