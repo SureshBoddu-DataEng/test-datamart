@@ -96,14 +96,11 @@ if __name__ == '__main__':
             for src in src_tbl:
                 print("src = " + src)
                 print("Redading from S3   >>>>>>>")
-                regDimDf = ut.read_data_from_redshift(spark,
-                                                      app_secret,
-                                                      "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/temp",
-                                                      app_conf)\
-                             .repartition(5)
+                regDimDf = ut.read_data_from_redshift()
+                    .repartition(5)
 
-                regDimDf.show(5, False)
-                regDimDf.createOrReplaceTempView(src)
+                childDimDf.show(5, False)
+                childDimDf.createOrReplaceTempView(src)
 
             print("RTL_TXN_FCT")
             spark.sql(tgt_conf["loadingQuery"]).show(5, False)

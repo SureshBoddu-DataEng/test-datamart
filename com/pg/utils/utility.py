@@ -66,3 +66,26 @@ def get_mysql_jdbc_url(mysql_config: dict):
     port = mysql_config["mysql_conf"]["port"]
     database = mysql_config["mysql_conf"]["database"]
     return "jdbc:mysql://{}:{}/{}?autoReconnect=true&useSSL=false".format(host, port, database)
+
+
+def write_data_to_redshift(dim_df, app_secret, s3_dir, table_name):
+    dim_df.write \
+        .format("io.github.spark_redshift_community.spark.redshift") \
+        .option("url", get_redshift_jdbc_url(app_secret)) \
+        .option("tempdir",  s3_dir) \
+        .option("forward_spark_s3_credentials", "true") \
+        .option("dbtable", table_name) \
+        .mode("overwrite") \
+        .save()
+
+
+def read_data_from_redshift(spark, app_secret, s3_dir, app_conf):
+    df = spark.read\
+        .format("io.github.spark_redshift_community.spark.redshift")\
+        .option("url", get_redshift_jdbc_url(app_secret)) \
+        .option("query", app_conf["redshift_conf"]["query"]) \
+        .option("forward_spark_s3_credentials", "true")\
+        .option("tempdir", s3_dir)\
+        .load()
+    return df
+
