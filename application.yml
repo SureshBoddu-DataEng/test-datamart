@@ -57,7 +57,7 @@ REGIS_DIM:
       FROM
         CP a
       WHERE
-        a.INS_DT = '2020-11-02'
+        a.INS_DT = '2020-11-13'
      ) CP
 
 CHILD_DIM:
@@ -72,7 +72,7 @@ CHILD_DIM:
     FROM
     CP
     WHERE
-      INS_DT = '2020-11-02'
+      INS_DT = '2020-11-13'
     ) CP
 
 
@@ -99,5 +99,5 @@ RTL_TXN_FCT:
     	LEFT OUTER JOIN DATAMART.REGIS_DIM REG
     	ON TXN.LOYALTY_ID = REG.CNSM_ID
     WHERE
-    	 TXN.INS_DT = '2020-11-02'
-    			AND (REC.INS_DT = '2020-11-02' OR REC.INS_DT is NULL)
+    	 TXN.INS_DT = '2020-11-13'
+    			AND (REC.INS_DT = '2020-11-13' OR REC.INS_DT is NULL)
