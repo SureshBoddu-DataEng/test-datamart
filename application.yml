@@ -55,7 +55,7 @@ REGIS_DIM:
      (SELECT
        DISTINCT a.REGIS_CNSM_ID, CAST(a.REGIS_CTY_CODE AS SMALLINT), CAST(a.REGIS_ID AS INTEGER),
        a.REGIS_LTY_ID, a.REGIS_DATE, a.REGIS_CHANNEL, a.REGIS_GENDER, a.REGIS_CITY, a.INS_DT,
-       b.city, b.state, b.street, b.ins_dt as addr_ins_dt
+       b.city, b.mobile-no, b.state, b.street, b.ins_dt as addr_ins_dt
       FROM
         CP a join ADDR b
       ON a.REGIS_CNSM_ID = b.consumer_id
