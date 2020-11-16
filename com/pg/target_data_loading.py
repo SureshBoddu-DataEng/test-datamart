@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StringType()
+from pyspark.sql.types import StringType
 import yaml
 import os.path
 import com.pg.utils.utility as ut
