@@ -57,7 +57,7 @@ REGIS_DIM:
       FROM
         CP a
       WHERE
-        a.INS_DT = '2020-11-01'
+        a.INS_DT = '2020-11-02'
      ) CP
 
 CHILD_DIM:
