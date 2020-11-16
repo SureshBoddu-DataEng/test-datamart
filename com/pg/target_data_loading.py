@@ -41,15 +41,17 @@ if __name__ == '__main__':
             for src in src_list:
                 print("src = "+src)
                 print("Redading from S3   >>>>>>>")
-                regDimDf = spark.read \
+                df = spark.read \
                     .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["s3_conf"]["staging_dir"] + "/" + src) \
                     .repartition(5)
 
-                regDimDf.show(5, False)
-                regDimDf.createOrReplaceTempView(src)
+                df.show(5, False)
+                df.createOrReplaceTempView(src)
 
             print("REGIS_DIM")
             spark.sql(tgt_conf["loadingQuery"]).show(5, False)
+
+            regDimDf = spark.sql(tgt_conf["loadingQuery"])
 
             ut.write_data_to_redshift(regDimDf.coalesce(1),
                                       app_secret,
